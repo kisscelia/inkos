@@ -31,7 +31,11 @@ export const statusCommand = new Command("status")
         log(`  ${book.title} (${id})`);
         log(`    Status: ${book.status}`);
         log(`    Platform: ${book.platform} | Genre: ${book.genre}`);
+        const totalWords = index.reduce((sum, ch) => sum + ch.wordCount, 0);
+        const avgWords = index.length > 0 ? Math.round(totalWords / index.length) : 0;
+
         log(`    Chapters: ${nextChapter - 1} / ${book.targetChapters}`);
+        log(`    Words: ${totalWords.toLocaleString()} (avg ${avgWords}/ch)`);
         log(`    Approved: ${approved} | Pending: ${pending} | Failed: ${failed}`);
         log("");
       }
