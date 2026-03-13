@@ -18,10 +18,10 @@ export const initCommand = new Command("init")
         name,
         version: "0.1.0",
         llm: {
-          provider: "anthropic",
-          baseUrl: process.env.INKOS_LLM_BASE_URL ?? "https://api.anthropic.com/v1",
+          provider: process.env.INKOS_LLM_PROVIDER ?? "openai",
+          baseUrl: process.env.INKOS_LLM_BASE_URL ?? "https://api.openai.com/v1",
           apiKey: process.env.INKOS_LLM_API_KEY ?? "",
-          model: process.env.INKOS_LLM_MODEL ?? "claude-sonnet-4-5-20250514",
+          model: process.env.INKOS_LLM_MODEL ?? "gpt-4o",
         },
         notify: [],
         daemon: {
@@ -43,10 +43,17 @@ export const initCommand = new Command("init")
       await writeFile(
         join(projectDir, ".env"),
         [
-          "INKOS_LLM_PROVIDER=anthropic",
-          "INKOS_LLM_BASE_URL=https://api.anthropic.com/v1",
+          "# LLM Configuration",
+          "# Provider: openai (OpenAI / compatible proxy), anthropic (Anthropic native)",
+          "INKOS_LLM_PROVIDER=openai",
+          "INKOS_LLM_BASE_URL=https://api.openai.com/v1",
           "INKOS_LLM_API_KEY=your-api-key-here",
-          "INKOS_LLM_MODEL=claude-sonnet-4-5-20250514",
+          "INKOS_LLM_MODEL=gpt-4o",
+          "",
+          "# Anthropic example:",
+          "# INKOS_LLM_PROVIDER=anthropic",
+          "# INKOS_LLM_BASE_URL=https://api.anthropic.com",
+          "# INKOS_LLM_MODEL=claude-sonnet-4-5-20250514",
         ].join("\n"),
         "utf-8",
       );
